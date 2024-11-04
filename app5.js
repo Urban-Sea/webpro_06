@@ -28,10 +28,10 @@ app.get("/luck", (req, res) => {
 });
 
 app.get("/janken", (req, res) => {
-  let hand = req.query.hand;
-  let win = Number( req.query.win );
-  let total = Number( req.query.total );
-  console.log( {hand, win, total});
+  let hand = req.query.hand || 'グー';  
+  let win = Number(req.query.win) || 0;  // 初期値を0に設定
+  let total = Number(req.query.total) || 0;  // 初期値を0に設定
+  console.log({ hand, win, total });
 
   const num = Math.floor( Math.random() * 3 + 1 );
   let cpu = '';
@@ -39,7 +39,7 @@ app.get("/janken", (req, res) => {
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
 
-  let judgement = '勝ち';
+  let judgement = '';
 
  if (hand === cpu) {
    judgement = '引き分け';
