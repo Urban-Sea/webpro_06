@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ガチャガチャ</title>
+</head>
+<body>
+    <form action="/Gatyagatya2">
+        <input type="text" name="hand" required>
+        <label for="hand">1,2,3,4のどれかを当てよう</label>
+        <input type="submit" values="1,2,3,4のどれかを当てよう">
+        <input type="hidden" name="win" value="0">
+        <input type="hidden" name="total" value="0">
+    </form>
+</body>
+</html>

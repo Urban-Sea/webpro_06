@@ -66,4 +66,80 @@ app.get("/janken", (req, res) => {
   res.render( 'janken', display );
 });
 
+app.get("/Amekakushi", (req, res) => {
+  // ユーザーの手を "左" または "右" から取得し、デフォルトを "左" に設定
+  let hand = req.query.hand || '左';
+  let win = Number(req.query.win) || 0;
+  let total = Number(req.query.total) || 0;
+  console.log({ hand, win, total });
+
+  // CPUの手をランダムで "左" または "右" に設定
+  const num = Math.floor(Math.random() * 2 + 1);
+  let cpu = '';
+
+  if( num==1 ) cpu = '左';
+  else  cpu = '右';
+
+  // 勝敗判定
+  let judgement = '';
+
+  if (hand === cpu) {
+    judgement = '勝ち';
+    win += 1;
+  } else {
+    judgement = '負け';
+  }
+
+  total += 1;  // ゲームの総数を1つ増やす
+
+  const display = {
+    your: hand,
+    cpu: cpu,
+    judgement: judgement,
+    win: win,
+    total: total
+  };
+  console.log(display);
+  res.render('Amekakushi', display);
+});
+
+app.get("/Gatyagatya2", (req, res) => {
+  // ユーザーの手を "左" または "右" から取得し、デフォルトを "左" に設定
+  let hand = req.query.hand || '0';
+  let win = Number(req.query.win) || 0;
+  let total = Number(req.query.total) || 0;
+  console.log({ hand, win, total });
+
+  // CPUの手をランダムで "左" または "右" に設定
+  const num = Math.floor(Math.random() * 4 + 1);
+  let cpu = '';
+
+  if( num==1 ) cpu = '1';
+  else if (num==2) cpu = '2';
+  else if (num==3) cpu = '3';
+  else cpu = '4';
+
+  // 勝敗判定
+  let judgement = '';
+
+  if (hand === cpu) {
+    judgement = '★★★★★(大当たり)';
+    win += 1;
+  } else {
+    judgement = '★★★(当たり)';
+  }
+
+  total += 1;  // ゲームの総数を1つ増やす
+
+  const display = {
+    your: hand,
+    cpu: cpu,
+    judgement: judgement,
+    win: win,
+    total: total
+  };
+  console.log(display);
+  res.render('Gatyagatya2', display);
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ガチャガチャ</title>
+</head>
+<body>
+    <p>ガチャガチャ<p>
+    <p>あなたの手は<%= your %>です．</p>
+    <p>コンピュータは<%= cpu %>です．</p>
+    <p>判定：<%= judgement %></p>
+    <p>現在<%= total %>試合中<%= win %>勝しています．</p>
+    <hr>
+    <form action="/Gatyagatya2">
+        <input type="text" name="hand" required>
+        <label for="hand">1,2,3,4のどれかを当てよう</label>
+        <input type="hidden" name="win" value="<%= win %>">
+        <input type="hidden" name="total" value="<%= total %>">
+        <input type="submit" values="1,2,3,4のどれかを当てよう">
+    </form>   
+</body>
+</html>
