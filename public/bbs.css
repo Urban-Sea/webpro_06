@@ -5,10 +5,34 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center; /* 中央に配置 */
-    align-items: flex-start;
+    flex-direction: column;  /* ヘッダーとコンテンツを縦に並べる */
+    align-items: center;
     min-height: 100vh;
     padding: 20px;
+}
+
+/* ヘッダーのスタイル */
+header {
+    width: 100%;
+    background-color: #1da1f2;  /* Twitterの青色 */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;  /* ヘッダーとコンテンツの間に余白 */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* #container のスタイル */
+#container {
+    display: flex;
+    flex-direction: column; /* 1列に並べる */
+    align-items: center;
+    width: 100%;  /* コンテナの幅を100%に */
 }
 
 /* メインコンテナ */
@@ -30,6 +54,24 @@ body {
     background-color: white;
     border-radius: 10px; /* 角を丸く */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 少し影をつける */
+}
+
+/* 投稿フォームを画面の下部に固定 */
+#post-form {
+    position: fixed;
+    bottom: 0;  /* 画面の下に固定 */
+    left: 0;
+    width: 40%; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px 10px 0 0;  /* 下部の角を丸く */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);  /* 上に影をつける */
+    z-index: 10; /* 他のコンテンツより前に表示 */
+}
+
+/* メインコンテナ #bbs のスタイルを変更（スクロール時に内容が隠れないように） */
+#container {
+    margin-bottom: 120px;  /* 下に余白を作り、フォームと被らないように */
 }
 
 /* ラベルのスタイル */
@@ -72,6 +114,7 @@ body {
     position: sticky;
     top: 1rem;
 }
+
 /* 投稿チェックボタン */
 #check {
     padding: 12px;
@@ -97,19 +140,40 @@ body {
     border: 1px solid #e1e8ed;
 }
 
-/* 名前部分のスタイル */
+/* 名前と日時を横並びにする */
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* 名前のスタイル */
 .name {
     font-weight: bold;
     color: #1da1f2;  /* Twitterの青色 */
     font-size: 16px;
+    margin-right: 10px;  /* 名前と日時の間に余白 */
+}
+
+/* 日時のスタイル */
+.date {
+    font-size: 0.9em;
+    color: gray;
+}
+
+/* メッセージといいねを横並びにする */
+.body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* メッセージ部分のスタイル */
 .mes {
     font-size: 14px;
     color: #14171a;
-    margin-top: 8px;
-    line-height: 1.4;
+    flex-grow: 1;  /* メッセージが広がる */
+    margin-right: 10px;
 }
 
 /* いいねボタンのスタイル */
@@ -122,7 +186,6 @@ body {
     justify-content: center;
     font-size: 18px;
     color: #ccc;
-    margin-top: 10px;
 }
 
 /* ハートアイコンのスタイル */
@@ -146,4 +209,69 @@ body {
 /* ボタンにホバー効果を追加 */
 .like-button:hover .heart {
     color: #ff7a8d;
+}
+/* 名前とメッセージの入力フィールドのスタイル */
+#post-form input {
+    width: 93%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #e1e8ed;
+    background-color: #f5f8fa;
+    font-size: 12px;
+    margin-bottom: 10px; /* フォーム要素間の余白 */
+}
+
+/* プレースホルダーのスタイル */
+#post-form input::placeholder {
+    color: #aaa;  /* 薄い文字色 */
+    font-size: 12px;  /* プレースホルダーのフォントサイズを調整 */
+}
+/* スマホとタブレットに対応するレスポンシブデザイン */
+@media (max-width: 768px) {
+    /* #bbs と #post-form の幅を調整 */
+    #bbs, #post-form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    /* フォームの入力欄とボタンの幅を調整 */
+    #post-form input {
+        width: 90%;
+    }
+
+    #post-form button {
+        width: 90%;
+    }
+
+    /* ヘッダータイトルのフォントサイズ調整 */
+    header h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* スマホ用の調整 */
+    #bbs, #post-form {
+        width: 100%;
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 20px;
+    }
+
+    #post-form {
+        padding: 10px;
+        justify-content: center; 
+    }
+
+    #post-form input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #post-form button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }

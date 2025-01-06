@@ -99,9 +99,10 @@ app.post("/read", (req, res) => {
 app.post("/post", (req, res) => {
   const name = req.body.name;
   const message = req.body.message;
+  const date = new Date().toLocaleString(); // 現在日時を取得
   console.log( [name, message] );
   // 本来はここでDBMSに保存する
-  bbs.push({ name: name, message: message, likes: 0 });
+  bbs.push({ name: name, message: message, likes: 0, date: date });
   res.json( {number: bbs.length } );
 });
 
@@ -114,31 +115,29 @@ app.post("/like", (req, res) => {
     res.status(404).json({ success: false, message: "投稿が見つかりません。" });
   }
 });
-
-
 app.get("/bbs", (req,res) => {
-    console.log("GET /BBS");
-    res.json( {test: "GET /BBS" });
+  console.log("GET /BBS");
+  res.json( {test: "GET /BBS" });
 });
 
 app.post("/bbs", (req,res) => {
-    console.log("POST /BBS");
-    res.json( {test: "POST /BBS"});
+  console.log("POST /BBS");
+  res.json( {test: "POST /BBS"});
 })
 
 app.get("/bbs/:id", (req,res) => {
-    console.log( "GET /BBS/" + req.params.id );
-    res.json( {test: "GET /BBS/" + req.params.id });
+  console.log( "GET /BBS/" + req.params.id );
+  res.json( {test: "GET /BBS/" + req.params.id });
 });
 
 app.put("/bbs/:id", (req,res) => {
-    console.log( "PUT /BBS/" + req.params.id );
-    res.json( {test: "PUT /BBS/" + req.params.id });
+  console.log( "PUT /BBS/" + req.params.id );
+  res.json( {test: "PUT /BBS/" + req.params.id });
 });
 
 app.delete("/bbs/:id", (req,res) => {
-    console.log( "DELETE /BBS/" + req.params.id );
-    res.json( {test: "DELETE /BBS/" + req.params.id });
+  console.log( "DELETE /BBS/" + req.params.id );
+  res.json( {test: "DELETE /BBS/" + req.params.id });
 });
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));

@@ -72,20 +72,35 @@ document.querySelector('#check').addEventListener('click', () => {
                     let cover = document.createElement('div');
                     cover.className = 'cover';
                 
+                    // 名前と日時を横並びに表示
+                    let header2 = document.createElement('div');
+                    header2.className = 'header2';
+
                     let name_area = document.createElement('span');
                     name_area.className = 'name';
                     name_area.innerText = mes.name;
+
+                    let date_area = document.createElement('span'); // 日時表示エリア
+                    date_area.className = 'date';
+                    date_area.innerText = mes.date; // 日時を表示
                 
+                    header2.appendChild(name_area);
+                    header2.appendChild(date_area);
+
+                    // メッセージといいねを横並びに表示
+                    let body = document.createElement('div');
+                    body.className = 'body';
+
                     let mes_area = document.createElement('span');
                     mes_area.className = 'mes';
                     mes_area.innerText = mes.message;
-                
+
                     let like_button = document.createElement('button'); // いいねボタン
                     like_button.className = 'like-button';
                     
                     let heart = document.createElement('span');
                     heart.className = 'heart';
-                    heart.innerHTML = '❤️'; // ハートの絵文字
+                    heart.innerHTML = '♡'; // ハートの絵文字
                 
                     let like_count = document.createElement('span');
                     like_count.innerText = `(${mes.likes || 0})`; // いいね数の表示
@@ -98,10 +113,13 @@ document.querySelector('#check').addEventListener('click', () => {
                         like_button.classList.add('liked');
                         like_count.innerText = `(${++mes.likes || 1})`; // いいね数を増やす
                     });
+
+                    body.appendChild(mes_area);
+                    body.appendChild(like_button);
                 
-                    cover.appendChild(name_area);
-                    cover.appendChild(mes_area);
-                    cover.appendChild(like_button);
+                    // 追加したheaderとbodyをcoverに組み込み
+                    cover.appendChild(header2);
+                    cover.appendChild(body);
                 
                     bbs.appendChild(cover);
                 }
