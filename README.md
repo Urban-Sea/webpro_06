@@ -1,209 +1,185 @@
-# webpro_06
+# webpro_06の説明
 2024/10/29
+2024/12/27
 
+## <飴隠し>
 #### 飴隠しのファイル一覧
 ファイル名 | 説明
 -|-
 app5.js | プログラム本体
-public/Amekakushi.html | 飴隠しの開始画面
+public/Amekakushi.html | 静的な飴隠しの開始画面
+views/Amekakushi.ejs | 動的なじゃんけんの画面
 
-#### 飴隠しのプログラムについて
-1. app5.js を起動する
-1. Webブラウザでlocalhost:8080/public/Amekakushi.htmlにアクセスする
-1. 自分の手を入力する(右or左)
-1. 勝敗判定を行う
-1. 再度自分の手を入力する(右or左)場所に戻る
+#### 飴隠しを始めるにあたって
+1. 飴隠しを始めるためにターミナルに以下のコマンドを打ち込み、WEBサーバーを構築する
 
-#### 飴隠しのプログラム内容
-```javascript
-app.get("/Amekakushi", (req, res) => {
-  // ユーザーの手を "左" または "右" から取得し、デフォルトを "左" に設定
-  let hand = req.query.hand || '左';
-  let win = Number(req.query.win) || 0;
-  let total = Number(req.query.total) || 0;
-  console.log({ hand, win, total });
+片方のターミナル | もう片方のターミナル
+-|-
+node app5.js | telnet localhost 8080
+-| GET /rest HTTP/1.1
+-|Host: localhost
 
-  // CPUの手をランダムで "左" または "右" に設定
-  const num = Math.floor(Math.random() * 2 + 1);
-  let cpu = '';
+2. ブラウザで以下のURLにアクセスする
+http://localhost:8080/public/Amekakushi.html
 
-  if( num==1 ) cpu = '左';
-  else  cpu = '右';
+これで飴隠しを始めるのに必要なサーバー構築を終えた。
 
-  // 勝敗判定
-  let judgement = '';
+#### 飴隠しの機能説明
+「飴隠し」は、ユーザーとPCが対戦するシンプルなゲームで、PCがどちらの手に飴を隠しているのかをユーザーが当てたら勝ちである。選んだユーザーは「右」または「左」のどちらかを選択する。一方、PC側はランダムに「右」または「左」を選ぶ。選択後、以下の処理が行われる。
 
-  if (hand === cpu) {
-    judgement = '勝ち';
-    win += 1;
-  } else {
-    judgement = '負け';
-  }
+1. ユーザーが選んだ手（右または左）と、PCが選んだ手が画面に表示される。
+2. ユーザーの選択とPCの選択を比較し、次のように判定する。
+    ・一致：ユーザーの「勝ち」
+    ・不一致：ユーザーの「負け」
+3. 勝利数（win）と試行回数（total）が更新され、現在の成績として画面に表示される。
 
-  total += 1;  // ゲームの総数を1つ増やす
+この過程は何度でも繰り返すことができる。
 
-  const display = {
-    your: hand,
-    cpu: cpu,
-    judgement: judgement,
-    win: win,
-    total: total
-  };
-  console.log(display);
-  res.render('Amekakushi', display);
-});
-
-app.listen(8080, () => console.log("Example app listening on port 8080!"));
-```
-
-```Amekakushi.ejs
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>飴隠し</title>
-</head>
-<body>
-    <p>飴隠し<p>
-    <p>あなたの手は<%= your %>です．</p>
-    <p>コンピュータは<%= cpu %>です．</p>
-    <p>判定：<%= judgement %></p>
-    <p>現在<%= total %>試合中<%= win %>勝しています．</p>
-    <hr>
-    <form action="/Amekakushi">
-        <input type="text" name="hand" required>
-        <label for="hand">右？左？</label>
-        <input type="hidden" name="win" value="<%= win %>">
-        <input type="hidden" name="total" value="<%= total %>">
-        <input type="submit" values="右左どっちだ">
-    </form>   
-</body>
-</html>
-```
-
-### 飴隠しのフローチャート
+#### 飴隠しのフローチャート
 
 ```mermaid
 flowchart TD;
 
-start["右か左かを入力する"];
-end1["1回のゲームが終了"]
-if{"コンピュータと手が同じか"}
+preparatiion1["「飴隠しを始めるにあたって」を行う"];
+preparatiion2["ユーザーがブラウザで右、または左のいずれかを入力し、リクエストを送信"];
+start1["パラメータ（hand、win、total）を取得"];
+start2["サーバーがランダムにPCの右または、左を生成"];
+end1["結果と更新された情報をレスポンスとして送信(winの更新、total+1)"]
+if{"一致判定"}
 win["あなたの勝ち"]
 loose["あなたの負け"]
-total["ゲームの記録"]
+total["ユーザーの画面に結果を表示"]
 
-
-start --> if
-if -->|yes| win
+preparatiion1 --> preparatiion2
+preparatiion2 --> start1
+start1 --> start2
+start2 --> if
+if -->|hand = cpu| win
 win --> end1
-if -->|no| loose
+if -->|hand ≠ cpu| loose
 loose --> end1
 end1 --> total
-total --> |繰り返し| start
+total --> |繰り返し| preparatiion2
 ```
 
-
+## <ガチャガチャ>
 
 #### ガチャガチャのファイル一覧
 ファイル名 | 説明
 -|-
 app5.js | プログラム本体
-public/Gatyagatya2.html | ガチャガチャの開始画面
+public/Gatyagatya2.html | 静的なガチャガチャの開始画面
+views/Gatyagatya2.ejs | 動的なガチャガチャの画面
 
-#### ガチャガチャのプログラムについて
-1. app5.js を起動する
-1. Webブラウザでlocalhost:8080/public/Gatyagatya2.htmlにアクセスする
-1. 1,2,3,4のいずれかの数字を入力する
-1. 当たりか大当たりかの判定を行う
-1. 再度1,2,3,4を入力する場所に戻る
 
-#### ガチャガチャのプログラム内容
-```javascript
-app.get("/Gatyagatya2", (req, res) => {
-  
-  let hand = req.query.hand || '0';
-  let win = Number(req.query.win) || 0;
-  let total = Number(req.query.total) || 0;
-  console.log({ hand, win, total });
+#### ガチャガチャを始めるにあたって
+1. ガチャガチャを始めるためにターミナルに以下のコマンドを打ち込み、WEBサーバーを構築する
 
- const num = Math.floor(Math.random() * 4 + 1);
-  let cpu = '';
+片方のターミナル | もう片方のターミナル
+-|-
+node app5.js | telnet localhost 8080
+-| GET /rest HTTP/1.1
+-|Host: localhost
 
-  if( num==1 ) cpu = '1';
-  else if (num==2) cpu = '2';
-  else if (num==3) cpu = '3';
-  else cpu = '4';
+2. ブラウザで以下のURLにアクセスする
+http://localhost:8080/public/Gatyagatya2.html
 
-  // 勝敗判定
-  let judgement = '';
+これでガチャガチャを始めるのに必要なサーバー構築を終えた。
 
-  if (hand === cpu) {
-    judgement = '★★★★★(大当たり)';
-    win += 1;
-  } else {
-    judgement = '★★★(当たり)';
-  }
 
-  total += 1;  // ゲームの総数を1つ増やす
+#### ガチャガチャの機能説明
+ガチャガチャは、ユーザーとPCが数字を選んで、大当たり（★★★★★）を狙うシンプルなゲームだ。ユーザーはブラウザ上に表示される選択肢（1, 2, 3, 4のいずれか）から数字を選ぶ。一方、PC側は乱数を用いて1から4のいずれかを選択する。選択後、以下の処理が行われる。
 
-  const display = {
-    your: hand,
-    cpu: cpu,
-    judgement: judgement,
-    win: win,
-    total: total
-  };
-  console.log(display);
-  res.render('Amekakushi', display);
-});
+1. ユーザーとPCの選んだ数字が画面に表示される。
+2. 選んだ数字が一致した場合、大当たり（★★★★★）となり、勝利数が増加する。不一致の場合は当たり（★★★）として表示される。
+3. 総試行回数や大当たり数などの統計情報が更新され、画面に表示される。
 
-app.listen(8080, () => console.log("Example app listening on port 8080!"));
-```
+この過程は何度でも繰り返すことができる。
 
-```Gatyagatya2.ejs
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>ガチャガチャ</title>
-</head>
-<body>
-    <p>ガチャガチャ<p>
-    <p>あなたの手は<%= your %>です．</p>
-    <p>コンピュータは<%= cpu %>です．</p>
-    <p>判定：<%= judgement %></p>
-    <p>現在<%= total %>試合中<%= win %>勝しています．</p>
-    <hr>
-    <form action="/Gatyagatya2">
-        <input type="text" name="hand" required>
-        <label for="hand">1,2,3,4のどれかを当てよう</label>
-        <input type="hidden" name="win" value="<%= win %>">
-        <input type="hidden" name="total" value="<%= total %>">
-        <input type="submit" values="1,2,3,4のどれかを当てよう">
-    </form>   
-</body>
-</html>
-```
-
-### ガチャガチャのフローチャート
+#### ガチャガチャのフローチャート
 
 ```mermaid
 flowchart TD;
 
-start["1,2,3,4のいずれかを入力する"];
-end1["1回のゲームが終了"]
-if{"コンピュータと自分の入力した数字が同じか"}
+preparatiion1["「ガチャガチャを始めるにあたって」を行う"];
+preparatiion2["ユーザーがブラウザで1,2,3,4のいずれかを入力し、リクエストを送信"];
+start1["パラメータ（hand、win、total）を取得"];
+start2["サーバーがランダムにPCの1,2,3,4を生成"];
+end1["結果と更新された情報をレスポンスとして送信(winの更新、total+1)"]
+if{"一致判定"}
 win["★★★★★(大当たり)"]
 loose["★★★(当たり)"]
-total["ゲームの記録"]
+total["ユーザーの画面に結果を表示"]
 
-
-start --> if
-if -->|yes| win
+preparatiion1 --> preparatiion2
+preparatiion2 --> start1
+start1 --> start2
+start2 --> if
+if -->|hand = cpu| win
 win --> end1
-if -->|no| loose
+if -->|hand ≠ cpu| loose
 loose --> end1
 end1 --> total
-total --> |繰り返し| start
+total --> |繰り返し| preparatiion2
+```
+
+##　<じゃんけん>
+
+#### じゃんけんのファイル一覧
+ファイル名 | 説明
+-|-
+app5.js | プログラム本体
+public/janken.html | 静的なじゃんけんの開始画面
+views/janken.ejs | 動的なじゃんけんの画面
+
+#### じゃんけんゲームを始めるにあたって
+1. じゃんけんゲームを始めるためにターミナルに以下のコマンドを打ち込み、WEBサーバーを構築する
+
+片方のターミナル | もう片方のターミナル
+-|-
+node app5.js | telnet localhost 8080
+-| GET /rest HTTP/1.1
+-|Host: localhost
+
+2. ブラウザで以下のURLにアクセスする
+http://localhost:8080/public/janken.html
+
+これでじゃんけんを始めるのに必要なサーバー構築を終えた。
+
+#### じゃんけんの機能説明
+じゃんけんは、ユーザーとPCが対戦するシンプルなゲームである。ユーザーはブラウザ上に表示される選択肢（グー、チョキ、パー）からじゃんけんの手を選ぶ。一方、PC側は乱数を用いて手を決定する。手の選択後、以下の処理が行われる。
+
+1. ユーザーとPCの手が画面に表示される。
+2. 勝敗または引き分けの判定が行われ、その結果が表示される。
+3. 勝数や試合数などの統計情報が更新され、画面に表示される。
+
+この過程は何度でも繰り返すことができる。
+
+#### じゃんけんのフローチャート
+```mermaid
+flowchart TD;
+
+preparatiion1["「じゃんけんゲームを始めるにあたって」を行う"];
+preparatiion2["ユーザーがブラウザで手を入力し、リクエストを送信"];
+start1["パラメータ（hand、win、total）を取得"];
+start2["サーバーがランダムにPCの手を生成"];
+end1["結果と更新された情報をレスポンスとして送信(winの更新、total+1)"]
+if{"勝敗判定"}
+win["あなたの勝ち"]
+draw["あいこ"]
+loose["あなたの負け"]
+total["ユーザーの画面に結果を表示"]
+
+preparatiion1 --> preparatiion2
+preparatiion2 --> start1
+start1 --> start2
+start2 --> if
+if -->|勝ち条件成立| win
+win --> end1
+if -->|ユーザーとPCの手が同じ| draw
+draw --> end1
+if -->|それ以外| loose
+loose --> end1
+end1 --> total
+total --> |繰り返し| preparatiion2
 ```

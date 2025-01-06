@@ -1,0 +1,149 @@
+/* 全体のスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f8fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* 中央に配置 */
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* メインコンテナ */
+#bbs {
+    width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 投稿フォームのスタイル */
+#post-form {
+    width: 400px; /* フォームの幅を小さく */
+    display: flex;
+    flex-direction: column; /* 上から下に配置 */
+    padding: 20px; /* 内部余白 */
+    margin: 0 auto; /* 左右の余白を均等に */
+    background-color: white;
+    border-radius: 10px; /* 角を丸く */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 少し影をつける */
+}
+
+/* ラベルのスタイル */
+#post-form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* 名前とメッセージの入力フィールドのスタイル */
+#post-form input {
+    width: 93%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #e1e8ed;
+    background-color: #f5f8fa;
+    font-size: 12px;
+    margin-bottom: 10px; /* フォーム要素間の余白 */
+}
+
+/* 送信ボタンのスタイル */
+#post-form button {
+    padding: 12px;
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px; /* ボタン間の余白 */
+}
+
+#post-form button:hover {
+    background-color: #1991db;
+}
+
+#post-form {
+    position: sticky;
+    top: 1rem;
+}
+/* 投稿チェックボタン */
+#check {
+    padding: 12px;
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#check:hover {
+    background-color: #1991db;
+}
+
+/* 投稿のスタイル */
+.cover {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e8ed;
+}
+
+/* 名前部分のスタイル */
+.name {
+    font-weight: bold;
+    color: #1da1f2;  /* Twitterの青色 */
+    font-size: 16px;
+}
+
+/* メッセージ部分のスタイル */
+.mes {
+    font-size: 14px;
+    color: #14171a;
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* いいねボタンのスタイル */
+.like-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+/* ハートアイコンのスタイル */
+.like-button .heart {
+    font-size: 20px;
+    color: #ccc;
+    transition: color 0.2s ease-in-out;
+}
+
+/* いいねボタンがクリックされた時の色変更 */
+.like-button.liked .heart {
+    color: #e0245e;
+}
+
+/* いいね数の表示 */
+.like-button span {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+/* ボタンにホバー効果を追加 */
+.like-button:hover .heart {
+    color: #ff7a8d;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掲示板</title>
+    <script src="./rest.js" defer></script>
+    <link rel="stylesheet" href="./rest.css">
+</head>
+<body>
+    <h1>掲示板操作</h1>
+    <table>
+        <thead>
+        <tr>
+            <td>→メソッド<br>↓URLの例</td>
+            <td>GET</td>
+            <td>POST</td>
+            <td>PUT</td>
+            <td>DELETE</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 一覧取得 (GET /bbs) -->
+        <tr>
+            <td>/BBS</td>
+            <td><button type="button" id="get1">一覧取得</button></td>
+            <td><button type="button" id="post2">新規投稿</button></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <!-- 詳細取得 (GET /bbs/:id) -->
+        <tr>
+            <td>/BBS/:id</td>
+            <td><button type="button" id="get2">詳細取得</button></td>
+            <td></td>
+            <td><button type="button" id="put">更新</button></td>
+            <td><button type="button" id="delete">削除</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>各ボタンをクリックして、掲示板の操作を行ってください。</p>
+</body>
+</html>
