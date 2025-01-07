@@ -100,7 +100,8 @@ app.post("/post", (req, res) => {
   const name = req.body.name;
   const message = req.body.message;
   const date = new Date().toLocaleString(); // 現在日時を取得
-  console.log( [name, message] );
+  
+  console.log( ["name:", name, "message:", message, "date", date] );
   // 本来はここでDBMSに保存する
   bbs.push({ name: name, message: message, likes: 0, date: date });
   res.json( {number: bbs.length } );
@@ -111,10 +112,9 @@ app.post("/like", (req, res) => {
   if (bbs[id]) {
     bbs[id].likes = (bbs[id].likes || 0) + 1; // いいねを増やす
     res.json({ success: true, likes: bbs[id].likes });
-  } else {
-    res.status(404).json({ success: false, message: "投稿が見つかりません。" });
   }
 });
+
 app.get("/bbs", (req,res) => {
   console.log("GET /BBS");
   res.json( {test: "GET /BBS" });

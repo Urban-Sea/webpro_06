@@ -1,0 +1,61 @@
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\usepackage[uplatex,deluxe]{otf} % UTF
+\usepackage[noalphabet]{pxchfon} % must be after otf package
+\usepackage{stix2} %欧文＆数式フォント
+\usepackage[fleqn,tbtags]{mathtools} % 数式関連 (w/ amsmath)
+\usepackage{hira-stix} % ヒラギノフォント＆STIX2 フォント代替定義（Warning回避）
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+\captionsetup[lstlisting]{font={small,tt}}
+
+
+\begin{document}
+\title{webprograming期末レポート} %システム名 仕様書 という形式にする
+\author{24G1089 武本龍}
+\date{2025年1月7日}
+\maketitle
+
+\section{はじめに}
+本レポートは
+
+
+\section{プログラムの概要}
+今回作成したプログラムの概要を説明する．
+
+
+
+\subsection{プログラムの関係}
+プログラムの中身を紹介する前に,作成したファイルの処理を説明する.
+今回用いたファイルは以下の図の通りである.
+
+
+ 
+自作関数を内包するファイルから「bigLetter.c」を説明のために使用する.今回用いたヘッダファイル「mul2.h」では関数や変数を宣言し,
+main関数を内包しない「mul2.c」では「mul2.h」で宣言された関数の処理内容を記述し,
+main関数を内包する「bigLetter.c」では実装された関数を呼び出し実行するという関係である.
+「bigLetter.c」の部分は自作関数を内包するファイル全てに当てはまる.
+
+\subsection{手順}
+期末レポートで用いた掲示板のサーバーの立ち上げ方は以下の手順の通りである．
+
+\subsubsection{サーバーの立ち上げ}
+バックエンド側のサーバー（app8.js）を起動する手順は次の通りである．
+\begin{enumerate}
+    \item ターミナルを起動し、サーバー処理をするバックエンド側のJavaScriptファイルがあるディレクトリに移動する．（例：cd /Desktop/webpro/webpro\_06）
+    \item 今回は app8.js がサーバー処理をするバックエンド側のJavaScriptなので、以下のコマンドを実行する．node app8.js
+\end{enumerate}
+
+\subsubsection{telnetによるサーバー接続}
+別のターミナルを立ち上げて，telnetを使用してサーバーに接続する手順は次の通りである．
+\begin{enumerate} 
+    \item ターミナルを起動し、以下のコマンドを実行する．telnet localhost 8080
+    \item 接続が成功したら、以下のコマンドを順に実行する．
+    \begin{enumerate} 
+        \item HTTPリクエストの開始行を入力する．GET /bbs HTTP/1.1
+        \item 次に、ホスト名を指定する．Host: localhost
+    \end{enumerate} 
+    \item 最後に、空行（Enterキーを2回押す）を送信してリクエストを終了する． 
+\end{enumerate}
+

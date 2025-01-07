@@ -45,9 +45,11 @@ document.querySelector('#check').addEventListener('click', () => {
         return response.json();
     })
     .then( (response) => {
-        let value = response.number;
+        let value = response.number;//サーバーから返された変数
         console.log( value );
 
+        document.querySelector('#post-count').innerText = `投稿件数: ${value}`;
+        
         console.log( number );
         if( number != value ) {
             const params = {
@@ -80,7 +82,7 @@ document.querySelector('#check').addEventListener('click', () => {
                     name_area.className = 'name';
                     name_area.innerText = mes.name;
 
-                    let date_area = document.createElement('span'); // 日時表示エリア
+                    let date_area = document.createElement('span'); // 日時表示
                     date_area.className = 'date';
                     date_area.innerText = mes.date; // 日時を表示
                 
@@ -117,7 +119,7 @@ document.querySelector('#check').addEventListener('click', () => {
                     body.appendChild(mes_area);
                     body.appendChild(like_button);
                 
-                    // 追加したheaderとbodyをcoverに組み込み
+                    // header2とbodyをcoverに組み込む
                     cover.appendChild(header2);
                     cover.appendChild(body);
                 
